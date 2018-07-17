@@ -7,8 +7,8 @@
     <ProjectGuid>{154C50CD-6969-4902-9D38-2FF04E6A5180}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dime.SaaS.MultiTenancy.Mvc5</RootNamespace>
-    <AssemblyName>Dime.SaaS.MultiTenancy.Mvc5</AssemblyName>
+    <RootNamespace>Dime.MultiTenancy.Mvc5</RootNamespace>
+    <AssemblyName>Dime.MultiTenancy.Mvc5</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

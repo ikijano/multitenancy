@@ -5,12 +5,22 @@ using System.Threading.Tasks;
 
 namespace Dime.Multitenancy.Internal
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TTenant"></typeparam>
     public class PrimaryHostnameRedirectMiddleware<TTenant>
     {
-        private readonly Func<TTenant, string> primaryHostnameAccessor;
-        private readonly bool permanentRedirect;
-        private readonly RequestDelegate next;
+        private readonly Func<TTenant, string> _primaryHostnameAccessor;
+        private readonly bool _permanentRedirect;
+        private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="primaryHostnameAccessor"></param>
+        /// <param name="permanentRedirect"></param>
         public PrimaryHostnameRedirectMiddleware(
             RequestDelegate next,
             Func<TTenant, string> primaryHostnameAccessor,
@@ -19,21 +29,24 @@ namespace Dime.Multitenancy.Internal
             Ensure.Argument.NotNull(next, nameof(next));
             Ensure.Argument.NotNull(primaryHostnameAccessor, nameof(primaryHostnameAccessor));
 
-            this.next = next;
-            this.primaryHostnameAccessor = primaryHostnameAccessor;
-            this.permanentRedirect = permanentRedirect;
+            this._next = next;
+            this._primaryHostnameAccessor = primaryHostnameAccessor;
+            this._permanentRedirect = permanentRedirect;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             Ensure.Argument.NotNull(context, nameof(context));
 
-            var tenantContext = context.GetTenantContext<TTenant>();
-
+            TenantContext<TTenant> tenantContext = context.GetTenantContext<TTenant>();
             if (tenantContext != null)
             {
-                var primaryHostname = primaryHostnameAccessor(tenantContext.Tenant);
-
+                string primaryHostname = _primaryHostnameAccessor(tenantContext.Tenant);
                 if (!string.IsNullOrWhiteSpace(primaryHostname))
                 {
                     if (!context.Request.Host.Value.Equals(primaryHostname, StringComparison.OrdinalIgnoreCase))
@@ -45,14 +58,20 @@ namespace Dime.Multitenancy.Internal
             }
 
             // otherwise continue processing
-            await next(context);
+            await _next(context);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="primaryHostname"></param>
         private void Redirect(HttpContext context, string primaryHostname)
         {
-            var builder = new UriBuilder(context.Request.GetEncodedUrl()) {Host = primaryHostname};
+            var builder = new UriBuilder(context.Request.GetEncodedUrl()) { Host = primaryHostname };
 
             context.Response.Redirect(builder.Uri.AbsoluteUri);
-            context.Response.StatusCode = permanentRedirect ? StatusCodes.Status301MovedPermanently : StatusCodes.Status302Found;
+            context.Response.StatusCode = _permanentRedirect ? StatusCodes.Status301MovedPermanently : StatusCodes.Status302Found;
         }
     }
 }

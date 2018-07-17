@@ -27,18 +27,18 @@ namespace Dime.MultiTenancy
             Ensure.Argument.NotNull(next, "next");
             Ensure.Argument.NotNull(redirectLocation, "redirectLocation");
 
-            this.next = next;
-            this.redirectLocation = redirectLocation;
-            this.permanentRedirect = permanentRedirect;
+            this._next = next;
+            this._redirectLocation = redirectLocation;
+            this._permanentRedirect = permanentRedirect;
         }
 
         #endregion Constructor
 
         #region Properties
 
-        private readonly Func<IDictionary<string, object>, Task> next;
-        private readonly string redirectLocation;
-        private readonly bool permanentRedirect;
+        private readonly Func<IDictionary<string, object>, Task> _next;
+        private readonly string _redirectLocation;
+        private readonly bool _permanentRedirect;
 
         #endregion Properties
 
@@ -58,16 +58,16 @@ namespace Dime.MultiTenancy
             {
                 // Redirect to the specified location
                 OwinContext owinContext = new OwinContext(environment);
-                owinContext.Response.Redirect(redirectLocation);
+                owinContext.Response.Redirect(_redirectLocation);
 
-                if (permanentRedirect)
+                if (_permanentRedirect)
                     owinContext.Response.StatusCode = 301;
 
                 return;
             }
 
             // otherwise continue processing
-            await next(environment);
+            await _next(environment);
         }
 
         #endregion Methods

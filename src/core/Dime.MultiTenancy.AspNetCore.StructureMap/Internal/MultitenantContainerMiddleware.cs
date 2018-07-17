@@ -7,12 +7,12 @@ namespace Dime.Multitenancy.StructureMap.Internal
 {
     internal class MultitenantContainerMiddleware<TTenant>
     {
-        private readonly RequestDelegate next;
+        private readonly RequestDelegate _next;
 
         public MultitenantContainerMiddleware(RequestDelegate next)
         {
             Ensure.Argument.NotNull(next, nameof(next));
-            this.next = next;
+            this._next = next;
         }
 
         public async Task Invoke(HttpContext context, Lazy<ITenantContainerBuilder<TTenant>> builder)
@@ -29,13 +29,13 @@ namespace Dime.Multitenancy.StructureMap.Internal
                 {
                     // Replace the request IServiceProvider created by IServiceScopeFactory
                     context.RequestServices = requestContainer.GetInstance<IServiceProvider>();
-                    await next.Invoke(context);
+                    await _next.Invoke(context);
                 }
             }
         }
 
         private async Task<IContainer> GetTenantContainerAsync(
-            TenantContext<TTenant> tenantContext, 
+            TenantContext<TTenant> tenantContext,
             Lazy<ITenantContainerBuilder<TTenant>> builder)
         {
             var tenantContainer = tenantContext.GetTenantContainer();

@@ -2,13 +2,19 @@
 
 namespace Microsoft.AspNetCore.Http
 {
-	/// <summary>
+    /// <summary>
     /// Multitenant extensions for <see cref="HttpContext"/>.
     /// </summary>
     public static class MultitenancyHttpContextExtensions
     {
         private const string TenantContextKey = "Dime.TenantContext";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TTenant"></typeparam>
+        /// <param name="context"></param>
+        /// <param name="tenantContext"></param>
         public static void SetTenantContext<TTenant>(this HttpContext context, TenantContext<TTenant> tenantContext)
         {
             Ensure.Argument.NotNull(context, nameof(context));
@@ -17,28 +23,33 @@ namespace Microsoft.AspNetCore.Http
             context.Items[TenantContextKey] = tenantContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TTenant"></typeparam>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static TenantContext<TTenant> GetTenantContext<TTenant>(this HttpContext context)
         {
             Ensure.Argument.NotNull(context, nameof(context));
 
-            if (context.Items.TryGetValue(TenantContextKey, out var tenantContext))
-                return tenantContext as TenantContext<TTenant>;
-
-            return null;
+            return context.Items.TryGetValue(TenantContextKey, out var tenantContext)
+                ? tenantContext as TenantContext<TTenant>
+                : null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TTenant"></typeparam>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static TTenant GetTenant<TTenant>(this HttpContext context)
         {
             Ensure.Argument.NotNull(context, nameof(context));
 
-            var tenantContext = GetTenantContext<TTenant>(context);
-
-            if (tenantContext != null)
-            {
-                return tenantContext.Tenant;
-            }
-
-            return default(TTenant);
+            TenantContext<TTenant> tenantContext = GetTenantContext<TTenant>(context);
+            return tenantContext != null ? tenantContext.Tenant : default(TTenant);
         }
     }
 }

@@ -8,57 +8,73 @@ namespace Dime.Multitenancy.Internal
 {
     public class TenantPipelineMiddleware<TTenant>
     {
-        private readonly RequestDelegate next;
-        private readonly IApplicationBuilder rootApp;
-        private readonly Action<TenantPipelineBuilderContext<TTenant>, IApplicationBuilder> configuration;
+        private readonly RequestDelegate _next;
+        private readonly IApplicationBuilder _rootApp;
+        private readonly Action<TenantPipelineBuilderContext<TTenant>, IApplicationBuilder> _configuration;
 
-        private readonly ConcurrentDictionary<TTenant, Lazy<RequestDelegate>> pipelines
+        private readonly ConcurrentDictionary<TTenant, Lazy<RequestDelegate>> _pipelines
             = new ConcurrentDictionary<TTenant, Lazy<RequestDelegate>>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="rootApp"></param>
+        /// <param name="configuration"></param>
         public TenantPipelineMiddleware(
-            RequestDelegate next, 
-            IApplicationBuilder rootApp, 
+            RequestDelegate next,
+            IApplicationBuilder rootApp,
             Action<TenantPipelineBuilderContext<TTenant>, IApplicationBuilder> configuration)
         {
             Ensure.Argument.NotNull(next, nameof(next));
             Ensure.Argument.NotNull(rootApp, nameof(rootApp));
             Ensure.Argument.NotNull(configuration, nameof(configuration));
 
-            this.next = next;
-            this.rootApp = rootApp;
-            this.configuration = configuration;
+            this._next = next;
+            this._rootApp = rootApp;
+            this._configuration = configuration;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             Ensure.Argument.NotNull(context, nameof(context));
 
-            var tenantContext = context.GetTenantContext<TTenant>();
+            TenantContext<TTenant> tenantContext = context.GetTenantContext<TTenant>();
 
             if (tenantContext != null)
             {
-                var tenantPipeline = pipelines.GetOrAdd(
-                    tenantContext.Tenant, 
+                var tenantPipeline = _pipelines.GetOrAdd(
+                    tenantContext.Tenant,
                     new Lazy<RequestDelegate>(() => BuildTenantPipeline(tenantContext)));
 
                 await tenantPipeline.Value(context);
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tenantContext"></param>
+        /// <returns></returns>
         private RequestDelegate BuildTenantPipeline(TenantContext<TTenant> tenantContext)
         {
-            var branchBuilder = rootApp.New();
+            IApplicationBuilder branchBuilder = _rootApp.New();
 
-            var builderContext = new TenantPipelineBuilderContext<TTenant>
+            TenantPipelineBuilderContext<TTenant> builderContext = new TenantPipelineBuilderContext<TTenant>
             {
                 TenantContext = tenantContext,
                 Tenant = tenantContext.Tenant
             };
 
-            configuration(builderContext, branchBuilder);
+            _configuration(builderContext, branchBuilder);
 
             // register root pipeline at the end of the tenant branch
-            branchBuilder.Run(next);
+            branchBuilder.Run(_next);
 
             return branchBuilder.Build();
         }

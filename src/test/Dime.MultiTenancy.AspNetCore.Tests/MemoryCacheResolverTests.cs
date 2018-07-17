@@ -33,7 +33,6 @@ namespace Dime.Multitenancy.Tests
             Assert.Equal("fruit", tenantContext.Tenant.Id);
         }
 
-
         [Fact]
         public async Task Can_retrieve_tenant_context_from_cache()
         {
@@ -70,16 +69,16 @@ namespace Dime.Multitenancy.Tests
 
             Thread.Sleep(1000);
 
-			// force MemoryCache to examine itself cache for pending evictions
-			harness.Cache.Get("/foobar");
+            // force MemoryCache to examine itself cache for pending evictions
+            harness.Cache.Get("/foobar");
 
-			// and give it a moment to works its magic
-			Thread.Sleep(100);
+            // and give it a moment to works its magic
+            Thread.Sleep(100);
 
-			// should also expire tenant context by default
-			Assert.False(harness.Cache.TryGetValue("/apple", out TenantContext<TestTenant> cachedTenant), "Apple Exists");
-			Assert.True(tenantContext.Tenant.Disposed);
-			Assert.Null(cachedTenant);
+            // should also expire tenant context by default
+            Assert.False(harness.Cache.TryGetValue("/apple", out TenantContext<TestTenant> cachedTenant), "Apple Exists");
+            Assert.True(tenantContext.Tenant.Disposed);
+            Assert.Null(cachedTenant);
         }
 
         [Fact]
@@ -100,18 +99,18 @@ namespace Dime.Multitenancy.Tests
             // expire apple
             harness.Cache.Remove("/apple");
 
-			Thread.Sleep(500);
+            Thread.Sleep(500);
 
-			// look it up again so it registers
-			harness.Cache.TryGetValue("/apple", out cachedTenant);
+            // look it up again so it registers
+            harness.Cache.TryGetValue("/apple", out cachedTenant);
 
-			Thread.Sleep(500);
+            Thread.Sleep(500);
 
-			// pear is expired - because apple is
-			Assert.False(harness.Cache.TryGetValue("/pear", out cachedTenant), "Pear Exists");
+            // pear is expired - because apple is
+            Assert.False(harness.Cache.TryGetValue("/pear", out cachedTenant), "Pear Exists");
 
-			// should also expire tenant context by default
-			Assert.True(tenantContext.Tenant.Disposed);
+            // should also expire tenant context by default
+            Assert.True(tenantContext.Tenant.Disposed);
         }
 
         [Fact]
@@ -138,44 +137,43 @@ namespace Dime.Multitenancy.Tests
 
             // pear is not expired
             Assert.True(harness.Cache.TryGetValue("/pear", out cachedTenant), "Pear Does Not Exist");
-		}
+        }
 
-		[Fact]
-		public async Task Can_dispose_on_eviction()
-		{
-			var harness = new TestHarness(cacheExpirationInSeconds: 1, disposeOnEviction: true);
-			var context = CreateContext("/apple");
+        [Fact]
+        public async Task Can_dispose_on_eviction()
+        {
+            var harness = new TestHarness(cacheExpirationInSeconds: 1, disposeOnEviction: true);
+            var context = CreateContext("/apple");
 
-			var tenantContext = await harness.Resolver.ResolveAsync(context);
+            var tenantContext = await harness.Resolver.ResolveAsync(context);
 
-			Thread.Sleep(2 * 1000);
-			// access it again so that MemoryCache examines it's cache for pending evictions
-			harness.Cache.Get("/foobar");
+            Thread.Sleep(2 * 1000);
+            // access it again so that MemoryCache examines it's cache for pending evictions
+            harness.Cache.Get("/foobar");
 
-			Thread.Sleep(1 * 1000);
-			// access it again and we should see the eviction
-			Assert.True(tenantContext.Tenant.Disposed);
-		}
+            Thread.Sleep(1 * 1000);
+            // access it again and we should see the eviction
+            Assert.True(tenantContext.Tenant.Disposed);
+        }
 
-		[Fact]
-		public async Task Can_not_dispose_on_eviction()
-		{
-			var harness = new TestHarness(cacheExpirationInSeconds: 1, disposeOnEviction: false);
-			var context = CreateContext("/apple");
+        [Fact]
+        public async Task Can_not_dispose_on_eviction()
+        {
+            var harness = new TestHarness(cacheExpirationInSeconds: 1, disposeOnEviction: false);
+            var context = CreateContext("/apple");
 
-			var tenantContext = await harness.Resolver.ResolveAsync(context);
+            var tenantContext = await harness.Resolver.ResolveAsync(context);
 
-			Thread.Sleep(1 * 1000);
-			// access it again so that MemoryCache examines it's cache for pending evictions
-			harness.Cache.Get("/foobar");
+            Thread.Sleep(1 * 1000);
+            // access it again so that MemoryCache examines it's cache for pending evictions
+            harness.Cache.Get("/foobar");
 
-			Thread.Sleep(1 * 1000);
-			// access it again and even though it's disposed, it should not be evicted
-			Assert.False(tenantContext.Tenant.Disposed);
-		}
+            Thread.Sleep(1 * 1000);
+            // access it again and even though it's disposed, it should not be evicted
+            Assert.False(tenantContext.Tenant.Disposed);
+        }
 
-
-		class TestTenant : IDisposable
+        private class TestTenant : IDisposable
         {
             public bool Disposed { get; set; }
 
@@ -207,26 +205,26 @@ namespace Dime.Multitenancy.Tests
             }
         }
 
-        class TestTenantMemoryCacheResolver : MemoryCacheTenantResolver<TestTenant>
+        private class TestTenantMemoryCacheResolver : MemoryCacheTenantResolver<TestTenant>
         {
-            readonly List<TestTenant> tenants = new List<TestTenant>()
+            private readonly List<TestTenant> _tenants = new List<TestTenant>()
                                            {
                                                new TestTenant() { Id = "fruit", Paths = new List<string>() { "/apple","/pear","/grape" }},
                                                new TestTenant() { Id = "vegetable", Paths = new List<string>() { "/lettuce","/carrot","/onion" }}
                                            };
 
-            private readonly int cacheExpirationInSeconds;
+            private readonly int _cacheExpirationInSeconds;
 
             public TestTenantMemoryCacheResolver(IMemoryCache cache, ILoggerFactory loggerFactory, MemoryCacheTenantResolverOptions options, int cacheExpirationInSeconds = 10)
                 : base(cache, loggerFactory, options)
             {
-                this.cacheExpirationInSeconds = cacheExpirationInSeconds;
+                this._cacheExpirationInSeconds = cacheExpirationInSeconds;
             }
 
             protected override MemoryCacheEntryOptions CreateCacheEntryOptions()
             {
                 return new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(cacheExpirationInSeconds));
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(_cacheExpirationInSeconds));
             }
 
             protected override string GetContextIdentifier(HttpContext context)
@@ -241,7 +239,7 @@ namespace Dime.Multitenancy.Tests
 
             protected override Task<TenantContext<TestTenant>> ResolveAsync(HttpContext context)
             {
-                var tenant = tenants.FirstOrDefault(testTenant => testTenant.Paths.Contains(context.Request.Path));
+                var tenant = _tenants.FirstOrDefault(testTenant => testTenant.Paths.Contains(context.Request.Path));
 
                 var tenantContext = new TenantContext<TestTenant>(tenant);
 
@@ -251,9 +249,9 @@ namespace Dime.Multitenancy.Tests
             }
         }
 
-        class TestHarness
+        private class TestHarness
         {
-            static ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
+            private static ILoggerFactory _loggerFactory = new LoggerFactory().AddConsole();
 
             public IMemoryCache Cache = new MemoryCache(new MemoryCacheOptions()
             {
@@ -265,7 +263,7 @@ namespace Dime.Multitenancy.Tests
             public TestHarness(bool disposeOnEviction = true, int cacheExpirationInSeconds = 10, bool evictAllOnExpiry = true)
             {
                 var options = new MemoryCacheTenantResolverOptions { DisposeOnEviction = disposeOnEviction, EvictAllEntriesOnExpiry = evictAllOnExpiry };
-                Resolver = new TestTenantMemoryCacheResolver(Cache, loggerFactory, options, cacheExpirationInSeconds);
+                Resolver = new TestTenantMemoryCacheResolver(Cache, _loggerFactory, options, cacheExpirationInSeconds);
             }
 
             public ITenantResolver<TestTenant> Resolver { get; }

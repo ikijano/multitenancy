@@ -4,11 +4,20 @@ using System.Threading.Tasks;
 
 namespace Dime.Multitenancy.Internal
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <typeparam name="TTenant"></typeparam>
 	public class TenantResolutionMiddleware<TTenant>
     {
-        private readonly RequestDelegate next;
-        private readonly ILogger log;
+        private readonly RequestDelegate _next;
+        private readonly ILogger _log;
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="loggerFactory"></param>
         public TenantResolutionMiddleware(
             RequestDelegate next,
             ILoggerFactory loggerFactory)
@@ -16,30 +25,34 @@ namespace Dime.Multitenancy.Internal
             Ensure.Argument.NotNull(next, nameof(next));
             Ensure.Argument.NotNull(loggerFactory, nameof(loggerFactory));
 
-            this.next = next;
-            this.log = loggerFactory.CreateLogger<TenantResolutionMiddleware<TTenant>>();
+            this._next = next;
+            this._log = loggerFactory.CreateLogger<TenantResolutionMiddleware<TTenant>>();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="tenantResolver"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context, ITenantResolver<TTenant> tenantResolver)
         {
             Ensure.Argument.NotNull(context, nameof(context));
             Ensure.Argument.NotNull(tenantResolver, nameof(tenantResolver));
 
-            log.LogDebug("Resolving TenantContext using {loggerType}.", tenantResolver.GetType().Name);
+            _log.LogDebug("Resolving TenantContext using {loggerType}.", tenantResolver.GetType().Name);
 
-            var tenantContext = await tenantResolver.ResolveAsync(context);
+            TenantContext<TTenant> tenantContext = await tenantResolver.ResolveAsync(context);
 
             if (tenantContext != null)
             {
-                log.LogDebug("TenantContext Resolved. Adding to HttpContext.");
+                _log.LogDebug("TenantContext Resolved. Adding to HttpContext.");
                 context.SetTenantContext(tenantContext);
             }
             else
-            {
-                log.LogDebug("TenantContext Not Resolved.");
-            }
+                _log.LogDebug("TenantContext Not Resolved.");
 
-            await next.Invoke(context);
+            await _next.Invoke(context);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Xunit;
 
 namespace Dime.Multitenancy.Tests
@@ -28,7 +27,7 @@ namespace Dime.Multitenancy.Tests
             Assert.Same(tenant, httpContext.GetTenant<TestTenant>());
         }
 
-        class TestTenant
+        private class TestTenant
         {
             public string Id { get; set; }
         }

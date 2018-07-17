@@ -9,92 +9,136 @@ using System.Threading.Tasks;
 
 namespace Dime.Multitenancy
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TTenant"></typeparam>
     public abstract class MemoryCacheTenantResolver<TTenant> : ITenantResolver<TTenant>
     {
-        protected readonly IMemoryCache cache;
-        protected readonly ILogger log;
-        protected readonly MemoryCacheTenantResolverOptions options;
+        protected readonly IMemoryCache Cache;
+        protected readonly ILogger Log;
+        protected readonly MemoryCacheTenantResolverOptions Options;
 
-        public MemoryCacheTenantResolver(IMemoryCache cache, ILoggerFactory loggerFactory)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cache"></param>
+        /// <param name="loggerFactory"></param>
+        protected MemoryCacheTenantResolver(IMemoryCache cache, ILoggerFactory loggerFactory)
             : this(cache, loggerFactory, new MemoryCacheTenantResolverOptions())
         {
         }
 
-        public MemoryCacheTenantResolver(IMemoryCache cache, ILoggerFactory loggerFactory, MemoryCacheTenantResolverOptions options)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cache"></param>
+        /// <param name="loggerFactory"></param>
+        /// <param name="options"></param>
+        protected MemoryCacheTenantResolver(IMemoryCache cache, ILoggerFactory loggerFactory, MemoryCacheTenantResolverOptions options)
         {
             Ensure.Argument.NotNull(cache, nameof(cache));
             Ensure.Argument.NotNull(loggerFactory, nameof(loggerFactory));
             Ensure.Argument.NotNull(options, nameof(options));
 
-            this.cache = cache;
-            this.log = loggerFactory.CreateLogger<MemoryCacheTenantResolver<TTenant>>();
-            this.options = options;
+            this.Cache = cache;
+            this.Log = loggerFactory.CreateLogger<MemoryCacheTenantResolver<TTenant>>();
+            this.Options = options;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         protected virtual MemoryCacheEntryOptions CreateCacheEntryOptions()
-        {
-            return new MemoryCacheEntryOptions()
-                .SetSlidingExpiration(new TimeSpan(1, 0, 0));
-        }
+            => new MemoryCacheEntryOptions().SetSlidingExpiration(new TimeSpan(1, 0, 0));
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cacheKey"></param>
+        /// <param name="tenantContext"></param>
         protected virtual void DisposeTenantContext(object cacheKey, TenantContext<TTenant> tenantContext)
         {
-            if (tenantContext != null)
-            {
-                log.LogDebug("Disposing TenantContext:{id} instance with key \"{cacheKey}\".", tenantContext.Id, cacheKey);
-                tenantContext.Dispose();
-            }
+            if (tenantContext == null)
+                return;
+
+            Log.LogDebug("Disposing TenantContext:{id} instance with key \"{cacheKey}\".", tenantContext.Id, cacheKey);
+            tenantContext.Dispose();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         protected abstract string GetContextIdentifier(HttpContext context);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         protected abstract IEnumerable<string> GetTenantIdentifiers(TenantContext<TTenant> context);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         protected abstract Task<TenantContext<TTenant>> ResolveAsync(HttpContext context);
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         async Task<TenantContext<TTenant>> ITenantResolver<TTenant>.ResolveAsync(HttpContext context)
         {
             Ensure.Argument.NotNull(context, nameof(context));
 
             // Obtain the key used to identify cached tenants from the current request
-            var cacheKey = GetContextIdentifier(context);
+            string cacheKey = GetContextIdentifier(context);
 
             if (cacheKey == null)
                 return null;
 
-            if (!(cache.Get(cacheKey) is TenantContext<TTenant> tenantContext))
+            if (!(Cache.Get(cacheKey) is TenantContext<TTenant> tenantContext))
             {
-                log.LogDebug("TenantContext not present in cache with key \"{cacheKey}\". Attempting to resolve.", cacheKey);
+                Log.LogDebug("TenantContext not present in cache with key \"{cacheKey}\". Attempting to resolve.", cacheKey);
                 tenantContext = await ResolveAsync(context);
 
                 if (tenantContext != null)
                 {
-                    var tenantIdentifiers = GetTenantIdentifiers(tenantContext);
+                    IEnumerable<string> tenantIdentifiers = GetTenantIdentifiers(tenantContext);
+                    if (tenantIdentifiers == null)
+                        return tenantContext;
 
-                    if (tenantIdentifiers != null)
-                    {
-                        var cacheEntryOptions = GetCacheEntryOptions();
+                    MemoryCacheEntryOptions cacheEntryOptions = GetCacheEntryOptions();
 
-                        log.LogDebug("TenantContext:{id} resolved. Caching with keys \"{tenantIdentifiers}\".", tenantContext.Id, tenantIdentifiers);
+                    Log.LogDebug("TenantContext:{id} resolved. Caching with keys \"{tenantIdentifiers}\".", tenantContext.Id, tenantIdentifiers);
 
-                        foreach (var identifier in tenantIdentifiers)
-                        {
-                            cache.Set(identifier, tenantContext, cacheEntryOptions);
-                        }
-                    }
+                    foreach (var identifier in tenantIdentifiers)
+                        Cache.Set(identifier, tenantContext, cacheEntryOptions);
                 }
             }
             else
             {
-                log.LogDebug("TenantContext:{id} retrieved from cache with key \"{cacheKey}\".", tenantContext.Id, cacheKey);
+                Log.LogDebug("TenantContext:{id} retrieved from cache with key \"{cacheKey}\".", tenantContext.Id, cacheKey);
             }
 
             return tenantContext;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         private MemoryCacheEntryOptions GetCacheEntryOptions()
         {
             var cacheEntryOptions = CreateCacheEntryOptions();
 
-            if (options.EvictAllEntriesOnExpiry)
+            if (Options.EvictAllEntriesOnExpiry)
             {
                 var tokenSource = new CancellationTokenSource();
 
@@ -107,7 +151,7 @@ namespace Dime.Multitenancy
                     .AddExpirationToken(new CancellationChangeToken(tokenSource.Token));
             }
 
-            if (options.DisposeOnEviction)
+            if (Options.DisposeOnEviction)
             {
                 cacheEntryOptions
                     .RegisterPostEvictionCallback(

@@ -5,7 +5,7 @@ namespace Dime.MultiTenancy
     /// <summary>
     ///
     /// </summary>
-    internal static class IDictionaryExtensions
+    internal static class DictionaryExtensions
     {
         /// <summary>
         ///

@@ -3,10 +3,18 @@ using System.Collections.Generic;
 
 namespace Dime.Multitenancy
 {
-	public class TenantContext<TTenant> : IDisposable
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TTenant"></typeparam>
+    public class TenantContext<TTenant> : IDisposable
     {
-        private bool disposed;
+        private bool _disposed;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tenant"></param>
         public TenantContext(TTenant tenant)
         {
             Ensure.Argument.NotNull(tenant, nameof(Tenant));
@@ -15,42 +23,58 @@ namespace Dime.Multitenancy
             Properties = new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Id { get; } = Guid.NewGuid().ToString();
+
+        /// <summary>
+        /// 
+        /// </summary>
         public TTenant Tenant { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IDictionary<string, object> Properties { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
-            {
+            if (_disposed)
                 return;
-            }
 
             if (disposing)
             {
                 foreach (var prop in Properties)
-                {
                     TryDisposeProperty(prop.Value as IDisposable);
-                }
 
-				TryDisposeProperty(Tenant as IDisposable);
-			}
+                TryDisposeProperty(Tenant as IDisposable);
+            }
 
-            disposed = true;
+            _disposed = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
         private void TryDisposeProperty(IDisposable obj)
         {
             if (obj == null)
-            {
                 return;
-            }
 
             try
             {

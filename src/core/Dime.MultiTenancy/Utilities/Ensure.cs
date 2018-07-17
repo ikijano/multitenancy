@@ -180,7 +180,7 @@ namespace Dime.MultiTenancy
             /// <exception cref="System.ArgumentNullException">
             ///     Thrown if <paramref cref="value" /> is null
             /// </exception>
-            public static void NotNull(object value, string paramName = "") 
+            public static void NotNull(object value, string paramName = "")
                 => That<ArgumentNullException>(value != null, paramName);
 
             /// <summary>

@@ -4,8 +4,18 @@ using System;
 
 namespace Microsoft.AspNetCore.Builder
 {
-	public static class UsePerTenantApplicationBuilderExtensions
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class UsePerTenantApplicationBuilderExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TTenant"></typeparam>
+        /// <param name="app"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IApplicationBuilder UsePerTenant<TTenant>(this IApplicationBuilder app, Action<TenantPipelineBuilderContext<TTenant>, IApplicationBuilder> configuration)
         {
             Ensure.Argument.NotNull(app, nameof(app));

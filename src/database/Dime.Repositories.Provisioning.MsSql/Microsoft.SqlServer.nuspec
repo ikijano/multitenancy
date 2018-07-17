@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Microsoft.SqlServer</id>
+    <version>1.0.5</version>
+    <title>Sql Server Management Assemblies</title>
+    <authors>Dimenics</authors>
+    <owners>Dimenics</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NuGet Package for SQL DLLs</description>
+    <releaseNotes>V12</releaseNotes>
+    <copyright>Copyright 2017 -  Dimenics</copyright>
+    <references>
+      <group targetFramework="net461">
+        <reference file="Microsoft.SqlServer.ConnectionInfo.dll"></reference>
+        <reference file="Microsoft.SqlServer.Management.Sdk.Sfc.dll" />
+        <reference file="Microsoft.SqlServer.Smo.dll"></reference>
+        <reference file="Microsoft.SqlServer.ServiceBrokerEnum.dll"></reference>
+        <reference file="Microsoft.SqlServer.SqlEnum.dll"></reference>
+        <reference file="Microsoft.SqlServer.Dmf.dll"></reference>
+        <reference file="Microsoft.SqlServer.SmoExtended.dll"></reference>
+      </group>
+    </references>
+  </metadata>
+  <files>
+    <file src="Library\Microsoft.SqlServer.ConnectionInfo.dll" target="lib\net461"/>
+    <file src="Library\Microsoft.SqlServer.Management.Sdk.Sfc.dll" target="lib\net461"/>
+    <file src="Library\Microsoft.SqlServer.Smo.dll" target="lib\net461"/>
+    <file src="Library\Microsoft.SqlServer.ServiceBrokerEnum.dll" target="lib\net461"/>
+    <file src="Library\Microsoft.SqlServer.SqlEnum.dll" target="lib\net461"/>
+    <file src="Library\Microsoft.SqlServer.Dmf.dll" target="lib\net461"/>
+    <file src="Library\Microsoft.SqlServer.SmoExtended.dll" target="lib\net461"/>
+  </files>
+</package>

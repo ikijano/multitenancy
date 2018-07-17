@@ -27,18 +27,18 @@ namespace Dime.MultiTenancy
             Ensure.Argument.NotNull(next, "next");
             Ensure.Argument.NotNull(primaryHostnameAccessor, "primaryHostnameAccessor");
 
-            this.Next = next;
-            this.PrimaryHostnameAccessor = primaryHostnameAccessor;
-            this.PermanentRedirect = permanentRedirect;
+            this._next = next;
+            this._primaryHostnameAccessor = primaryHostnameAccessor;
+            this._permanentRedirect = permanentRedirect;
         }
 
         #endregion Constructor
 
         #region Properties
 
-        private readonly Func<IDictionary<string, object>, Task> Next;
-        private readonly Func<TTenant, string> PrimaryHostnameAccessor;
-        private readonly bool PermanentRedirect;
+        private readonly Func<IDictionary<string, object>, Task> _next;
+        private readonly Func<TTenant, string> _primaryHostnameAccessor;
+        private readonly bool _permanentRedirect;
 
         #endregion Properties
 
@@ -56,7 +56,7 @@ namespace Dime.MultiTenancy
             TenantContext<TTenant> tenantContext = environment.GetTenantContext<TTenant>();
             if (tenantContext != null)
             {
-                string primaryHostname = PrimaryHostnameAccessor(tenantContext.Tenant);
+                string primaryHostname = _primaryHostnameAccessor(tenantContext.Tenant);
                 if (!string.IsNullOrEmpty(primaryHostname))
                 {
                     OwinContext owinContext = new OwinContext(environment);
@@ -69,7 +69,7 @@ namespace Dime.MultiTenancy
             }
 
             // otherwise continue processing
-            await Next(environment);
+            await _next(environment);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Dime.MultiTenancy
 
             owinContext.Response.Redirect(builder.Uri.AbsoluteUri);
 
-            if (PermanentRedirect)
+            if (_permanentRedirect)
                 owinContext.Response.StatusCode = 301;
         }
 

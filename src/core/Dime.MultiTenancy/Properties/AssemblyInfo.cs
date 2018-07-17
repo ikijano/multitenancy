@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Dime.SaaS.MultiTenancy")]
+[assembly: AssemblyTitle("Dime.MultiTenancy.Mvc5")]
 [assembly: AssemblyDescription("Dime Multi-Tenancy Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dimenics")]
-[assembly: AssemblyProduct("Dime.SaaS.MultiTenancy")]
-[assembly: AssemblyCopyright("Copyright © 2017")]
+[assembly: AssemblyProduct("Dime.MultiTenancy.Mvc5")]
+[assembly: AssemblyCopyright("Copyright © 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
