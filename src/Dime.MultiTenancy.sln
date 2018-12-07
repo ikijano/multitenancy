@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET Core", "ASP.NET Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.MultiTenancy.AspNetCore", "core\Dime.MultiTenancy.AspNetCore\Dime.MultiTenancy.AspNetCore.csproj", "{0692AC53-78F3-4A5C-AF1A-186A2FD722E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.MultiTenancy.AspNetCore.StructureMap", "core\Dime.MultiTenancy.AspNetCore.StructureMap\Dime.MultiTenancy.AspNetCore.StructureMap.csproj", "{55045A74-7A12-4D07-BF77-74542B752E3F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.SaaS.MultiTenancy.AspNetCore.Tests", "test\Dime.MultiTenancy.AspNetCore.Tests\Dime.SaaS.MultiTenancy.AspNetCore.Tests.csproj", "{34E50D50-A25E-4B12-A16A-70E6639189BE}"
 EndProject
 Global
@@ -50,12 +48,6 @@ Global
 		{0692AC53-78F3-4A5C-AF1A-186A2FD722E5}.NuGet|Any CPU.Build.0 = Release|Any CPU
 		{0692AC53-78F3-4A5C-AF1A-186A2FD722E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0692AC53-78F3-4A5C-AF1A-186A2FD722E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55045A74-7A12-4D07-BF77-74542B752E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55045A74-7A12-4D07-BF77-74542B752E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55045A74-7A12-4D07-BF77-74542B752E3F}.NuGet|Any CPU.ActiveCfg = Release|Any CPU
-		{55045A74-7A12-4D07-BF77-74542B752E3F}.NuGet|Any CPU.Build.0 = Release|Any CPU
-		{55045A74-7A12-4D07-BF77-74542B752E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55045A74-7A12-4D07-BF77-74542B752E3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34E50D50-A25E-4B12-A16A-70E6639189BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34E50D50-A25E-4B12-A16A-70E6639189BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E50D50-A25E-4B12-A16A-70E6639189BE}.NuGet|Any CPU.ActiveCfg = Debug|Any CPU
@@ -69,7 +61,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FC47A35E-7331-4AF1-B2E5-A7F02A005125} = {109CC874-AB46-449F-A1BF-600A2D392B40}
 		{0692AC53-78F3-4A5C-AF1A-186A2FD722E5} = {E4DD5089-C3EF-413F-9C7F-58F5D7D8855D}
-		{55045A74-7A12-4D07-BF77-74542B752E3F} = {E4DD5089-C3EF-413F-9C7F-58F5D7D8855D}
 		{34E50D50-A25E-4B12-A16A-70E6639189BE} = {109CC874-AB46-449F-A1BF-600A2D392B40}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
