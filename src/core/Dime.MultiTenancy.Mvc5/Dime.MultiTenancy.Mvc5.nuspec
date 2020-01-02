@@ -5,13 +5,13 @@
     <version>$version$</version>
     <title>$title$</title>
     <authors>$author$</authors>
-    <owners>$author$</owners> 
+    <owners>$author$</owners>
     <projectUrl>http://www.dimenics.com</projectUrl>
     <iconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial Release.</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2020</copyright>
     <tags>Dimenics Dime.Scheduler Scheduler</tags>
   </metadata>
 </package>

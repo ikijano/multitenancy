@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.MultiTenancy.AspNetCore", "core\Dime.MultiTenancy.AspNetCore\Dime.MultiTenancy.AspNetCore.csproj", "{B9CD0F19-5314-49CF-80F5-845BAFB557B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.MultiTenancy.AspNetCore.StructureMap", "core\Dime.MultiTenancy.AspNetCore.StructureMap\Dime.MultiTenancy.AspNetCore.StructureMap.csproj", "{55BFC628-2A7F-4CF6-BE71-37209B9306CC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FB8E463A-2B11-4149-BF13-2D14342E4DF7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.SaaS.MultiTenancy.AspNetCore.Tests", "test\Dime.MultiTenancy.AspNetCore.Tests\Dime.SaaS.MultiTenancy.AspNetCore.Tests.csproj", "{A7F8509C-A330-4DAA-8F10-BE9416E3C3A5}"
@@ -33,18 +31,6 @@ Global
 		{B9CD0F19-5314-49CF-80F5-845BAFB557B5}.Release|x64.Build.0 = Release|Any CPU
 		{B9CD0F19-5314-49CF-80F5-845BAFB557B5}.Release|x86.ActiveCfg = Release|Any CPU
 		{B9CD0F19-5314-49CF-80F5-845BAFB557B5}.Release|x86.Build.0 = Release|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Debug|x64.Build.0 = Debug|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Debug|x86.Build.0 = Debug|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Release|x64.ActiveCfg = Release|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Release|x64.Build.0 = Release|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Release|x86.ActiveCfg = Release|Any CPU
-		{55BFC628-2A7F-4CF6-BE71-37209B9306CC}.Release|x86.Build.0 = Release|Any CPU
 		{A7F8509C-A330-4DAA-8F10-BE9416E3C3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7F8509C-A330-4DAA-8F10-BE9416E3C3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7F8509C-A330-4DAA-8F10-BE9416E3C3A5}.Debug|x64.ActiveCfg = Debug|Any CPU
