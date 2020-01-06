@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using System;
+using System.Threading.Tasks;
 
 namespace Dime.Repositories
 {
@@ -139,9 +140,9 @@ namespace Dime.Repositories
         /// <summary>
         ///
         /// </summary>
-        private void Connect()
+        private async Task Connect()
         {
-            AuthenticationResult token = GetToken(Credentials.TenantId, Credentials.ApplicationId, Credentials.ApplicationSecret);
+            AuthenticationResult token = await GetToken(Credentials.TenantId, Credentials.ApplicationId, Credentials.ApplicationSecret);
             TokenCredentials accessToken = new TokenCredentials(token.AccessToken);
 
             ResourceMgmtClient = new ResourceManagementClient(accessToken);
@@ -245,10 +246,10 @@ namespace Dime.Repositories
         /// <param name="applicationId"></param>
         /// <param name="applicationSecret"></param>
         /// <returns></returns>
-        private AuthenticationResult GetToken(string tenantId, string applicationId, string applicationSecret)
+        private async Task<AuthenticationResult> GetToken(string tenantId, string applicationId, string applicationSecret)
         {
             AuthenticationContext authContext = new AuthenticationContext("https://login.windows.net/" + tenantId);
-            return authContext.AcquireToken("https://management.core.windows.net/", new ClientCredential(applicationId, applicationSecret));
+            return await authContext.AcquireTokenAsync("https://management.core.windows.net/", new ClientCredential(applicationId, applicationSecret));
         }
 
         #endregion Methods
