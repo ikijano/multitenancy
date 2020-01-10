@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Dime.Multitenancy
+namespace Dime.MultiTenancy
 {
     /// <summary>
     /// 

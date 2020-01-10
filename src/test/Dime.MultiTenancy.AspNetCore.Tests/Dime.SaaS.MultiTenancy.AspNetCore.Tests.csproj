@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>SaasKit.Multitenancy.Tests Class Library</Description>
+    <Description>SaasKit.MultiTenancy.Tests Class Library</Description>
     <Authors>Ben Foster</Authors>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>SaasKit.Multitenancy.Tests</AssemblyName>
-    <PackageId>SaasKit.Multitenancy.Tests</PackageId>
+    <AssemblyName>SaasKit.MultiTenancy.Tests</AssemblyName>
+    <PackageId>SaasKit.MultiTenancy.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>

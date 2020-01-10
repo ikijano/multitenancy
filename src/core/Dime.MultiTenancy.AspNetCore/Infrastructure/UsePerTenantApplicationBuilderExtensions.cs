@@ -1,5 +1,5 @@
-﻿using Dime.Multitenancy;
-using Dime.Multitenancy.Internal;
+﻿using Dime.MultiTenancy;
+using Dime.MultiTenancy.Internal;
 using System;
 
 namespace Microsoft.AspNetCore.Builder

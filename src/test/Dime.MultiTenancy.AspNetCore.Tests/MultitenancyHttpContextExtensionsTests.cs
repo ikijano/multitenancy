@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Xunit;
 
-namespace Dime.Multitenancy.Tests
+namespace Dime.MultiTenancy.Tests
 {
-    public class MultitenancyHttpContextExtensionsTests
+    public class MultiTenancyHttpContextExtensionsTests
     {
         [Fact]
         public void Can_get_and_set_tenant_context()

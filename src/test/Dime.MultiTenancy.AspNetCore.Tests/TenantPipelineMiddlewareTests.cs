@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dime.Multitenancy.Tests
+namespace Dime.MultiTenancy.Tests
 {
     public class TenantPipelineMiddlewareTests
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Dime.Multitenancy.Internal
+namespace Dime.MultiTenancy.Internal
 {
     /// <summary>
     /// 

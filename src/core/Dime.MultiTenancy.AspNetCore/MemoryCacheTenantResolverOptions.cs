@@ -1,4 +1,4 @@
-﻿namespace Dime.Multitenancy
+﻿namespace Dime.MultiTenancy
 {
     /// <summary>
     /// Configuration options for <see cref="MemoryCacheTenantResolver{TTenant}"/>.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dime.Multitenancy
+namespace Dime.MultiTenancy
 {
     using System.Diagnostics;
 

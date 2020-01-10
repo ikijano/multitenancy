@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dime.Multitenancy.Tests
+namespace Dime.MultiTenancy.Tests
 {
     public class MemoryCacheTenantResolverTests
     {
@@ -251,7 +251,7 @@ namespace Dime.Multitenancy.Tests
 
         private class TestHarness
         {
-            private static ILoggerFactory _loggerFactory = new LoggerFactory().AddConsole();
+            private static ILoggerFactory _loggerFactory = new LoggerFactory();
 
             public IMemoryCache Cache = new MemoryCache(new MemoryCacheOptions()
             {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dime.Multitenancy
+namespace Dime.MultiTenancy
 {
     /// <summary>
     /// 

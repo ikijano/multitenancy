@@ -1,11 +1,11 @@
-﻿using Dime.Multitenancy;
+﻿using Dime.MultiTenancy;
 
 namespace Microsoft.AspNetCore.Http
 {
     /// <summary>
     /// Multitenant extensions for <see cref="HttpContext"/>.
     /// </summary>
-    public static class MultitenancyHttpContextExtensions
+    public static class MultiTenancyHttpContextExtensions
     {
         private const string TenantContextKey = "Dime.TenantContext";
 

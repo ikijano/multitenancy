@@ -1,4 +1,4 @@
-﻿namespace Dime.Multitenancy.Internal
+﻿namespace Dime.MultiTenancy.Internal
 {
     /// <summary>
     /// ITenant wrapper that returns the tenant instance.

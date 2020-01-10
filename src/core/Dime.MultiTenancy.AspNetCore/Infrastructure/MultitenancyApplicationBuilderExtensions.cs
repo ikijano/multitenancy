@@ -1,12 +1,12 @@
-﻿using Dime.Multitenancy;
-using Dime.Multitenancy.Internal;
+﻿using Dime.MultiTenancy;
+using Dime.MultiTenancy.Internal;
 
 namespace Microsoft.AspNetCore.Builder
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class MultitenancyApplicationBuilderExtensions
+    public static class MultiTenancyApplicationBuilderExtensions
     {
         /// <summary>
         /// 
@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.Builder
         /// <typeparam name="TTenant"></typeparam>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseMultitenancy<TTenant>(this IApplicationBuilder app)
+        public static IApplicationBuilder UseMultiTenancy<TTenant>(this IApplicationBuilder app)
         {
             Ensure.Argument.NotNull(app, nameof(app));
             return app.UseMiddleware<TenantResolutionMiddleware<TTenant>>();

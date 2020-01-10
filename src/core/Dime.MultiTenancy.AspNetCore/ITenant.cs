@@ -1,4 +1,4 @@
-﻿namespace Dime.Multitenancy
+﻿namespace Dime.MultiTenancy
 {
     /// <summary>
     /// Used to retreive configured TTenant instances.

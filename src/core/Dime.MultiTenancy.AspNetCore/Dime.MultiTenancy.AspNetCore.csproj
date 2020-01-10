@@ -7,7 +7,7 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <AssemblyName>Dime.MultiTenancy.AspNetCore</AssemblyName>
     <PackageId>Dime.MultiTenancy.AspNetCore</PackageId>
-    <PackageTags>Multi-tenancy;Multitenant;Multitenancy;Multitenant;Saas</PackageTags>
+    <PackageTags>Multi-tenancy;Multitenant;MultiTenancy;Multitenant;Saas</PackageTags>
     <PackageReleaseNotes>- 1.4.1: .NET Core 2.2.0</PackageReleaseNotes>
     <PackageProjectUrl>https://dimenicsbe.visualstudio.com/DefaultCollection/Dime.Scheduler V2</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
@@ -21,9 +21,9 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <RootNamespace>Dime.MultiTenancy.AspNetCore</RootNamespace>
-    <Version>1.5.0</Version>
-    <AssemblyVersion>1.5.0.0</AssemblyVersion>
-    <FileVersion>1.5.0.0</FileVersion>
+    <Version>1.5.1</Version>
+    <AssemblyVersion>1.5.1.0</AssemblyVersion>
+    <FileVersion>1.5.1.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Dimenics</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

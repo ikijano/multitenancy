@@ -1,5 +1,5 @@
-﻿using Dime.Multitenancy;
-using Dime.Multitenancy.Internal;
+﻿using Dime.MultiTenancy;
+using Dime.MultiTenancy.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <summary>
     ///
     /// </summary>
-    public static class MultitenancyServiceCollectionExtensions
+    public static class MultiTenancyServiceCollectionExtensions
     {
         /// <summary>
         ///
@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <typeparam name="TResolver"></typeparam>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMultitenancy<TTenant, TResolver>(this IServiceCollection services)
+        public static IServiceCollection AddMultiTenancy<TTenant, TResolver>(this IServiceCollection services)
             where TResolver : class, ITenantResolver<TTenant>
             where TTenant : class
         {
