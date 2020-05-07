@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dime.MultiTenancy
+namespace Owin.MultiTenancy
 {
     /// <summary>
     ///
@@ -11,27 +11,21 @@ namespace Dime.MultiTenancy
     public class TenantResolutionMiddleware<TTenant>
     {
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="TenantResolutionMiddleware{TTenant}"/> class
         /// </summary>
         /// <param name="next"></param>
         /// <param name="tenantResolverFactory"></param>
         public TenantResolutionMiddleware(Func<IDictionary<string, object>, Task> next, Func<ITenantResolver<TTenant>> tenantResolverFactory)
         {
-            Ensure.Argument.NotNull(next, "next");
-            Ensure.Argument.NotNull(tenantResolverFactory, "tenantResolverFactory");
+            Ensure.Argument.NotNull(next, nameof(next));
+            Ensure.Argument.NotNull(tenantResolverFactory, nameof(tenantResolverFactory));
 
-            this._next = next;
-            this._tenantResolverFactory = tenantResolverFactory;
+            _next = next;
+            _tenantResolverFactory = tenantResolverFactory;
         }
-
-        #region Properties
 
         private readonly Func<IDictionary<string, object>, Task> _next;
         private readonly Func<ITenantResolver<TTenant>> _tenantResolverFactory;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         ///
@@ -40,7 +34,7 @@ namespace Dime.MultiTenancy
         /// <returns></returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, "environment");
+            Ensure.Argument.NotNull(environment, nameof(environment));
 
             ITenantResolver<TTenant> tenantResolver = _tenantResolverFactory();
             TenantContext<TTenant> tenantContext = await tenantResolver.ResolveAsync(environment);
@@ -50,7 +44,5 @@ namespace Dime.MultiTenancy
 
             await _next(environment);
         }
-
-        #endregion Methods
     }
 }

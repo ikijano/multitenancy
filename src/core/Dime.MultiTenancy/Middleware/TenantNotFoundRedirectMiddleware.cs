@@ -1,9 +1,9 @@
-﻿using Microsoft.Owin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Owin;
 
-namespace Dime.MultiTenancy
+namespace Owin.MultiTenancy
 {
     /// <summary>
     ///
@@ -11,38 +11,25 @@ namespace Dime.MultiTenancy
     /// <typeparam name="TTenant"></typeparam>
     public class TenantNotFoundRedirectMiddleware<TTenant>
     {
-        #region Constructor
-
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="TenantNotFoundRedirectMiddleware{TTenant}"/> class
         /// </summary>
         /// <param name="next"></param>
         /// <param name="redirectLocation"></param>
         /// <param name="permanentRedirect"></param>
-        public TenantNotFoundRedirectMiddleware(
-            Func<IDictionary<string, object>, Task> next,
-            string redirectLocation,
-            bool permanentRedirect)
+        public TenantNotFoundRedirectMiddleware(Func<IDictionary<string, object>, Task> next, string redirectLocation, bool permanentRedirect)
         {
-            Ensure.Argument.NotNull(next, "next");
-            Ensure.Argument.NotNull(redirectLocation, "redirectLocation");
+            Ensure.Argument.NotNull(next, nameof(next));
+            Ensure.Argument.NotNull(redirectLocation, nameof(redirectLocation));
 
-            this._next = next;
-            this._redirectLocation = redirectLocation;
-            this._permanentRedirect = permanentRedirect;
+            _next = next;
+            _redirectLocation = redirectLocation;
+            _permanentRedirect = permanentRedirect;
         }
-
-        #endregion Constructor
-
-        #region Properties
 
         private readonly Func<IDictionary<string, object>, Task> _next;
         private readonly string _redirectLocation;
         private readonly bool _permanentRedirect;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         ///
@@ -51,7 +38,7 @@ namespace Dime.MultiTenancy
         /// <returns></returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, "environment");
+            Ensure.Argument.NotNull(environment, nameof(environment));
 
             TenantContext<TTenant> tenantContext = environment.GetTenantContext<TTenant>();
             if (tenantContext == null)
@@ -66,10 +53,8 @@ namespace Dime.MultiTenancy
                 return;
             }
 
-            // otherwise continue processing
+            // Otherwise continue processing
             await _next(environment);
         }
-
-        #endregion Methods
     }
 }

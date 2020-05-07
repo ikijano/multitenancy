@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Dime.MultiTenancy
+namespace Owin.MultiTenancy
 {
     /// <summary>
     ///
@@ -10,7 +11,7 @@ namespace Dime.MultiTenancy
         /// <summary>
         /// The key that is used to store the tenant context in the owin environment
         /// </summary>
-        private const string TenantContextKey = "dimescheduler:tenantContext";
+        private const string TenantContextKey = "owin:tenantContext";
 
         /// <summary>
         ///
@@ -20,8 +21,8 @@ namespace Dime.MultiTenancy
         /// <param name="tenantContext"></param>
         public static void SetTenantContext<TTenant>(this IDictionary<string, object> environment, TenantContext<TTenant> tenantContext)
         {
-            Ensure.Argument.NotNull(environment, "environment");
-            Ensure.Argument.NotNull(tenantContext, "tenantContext");
+            Ensure.Argument.NotNull(environment, nameof(environment));
+            Ensure.Argument.NotNull(tenantContext, nameof(tenantContext));
 
             environment.AddOrUpdate(TenantContextKey, tenantContext);
         }
@@ -34,9 +35,9 @@ namespace Dime.MultiTenancy
         /// <returns></returns>
         public static TenantContext<TTenant> GetTenantContext<TTenant>(this IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, "environment");
+            Ensure.Argument.NotNull(environment, nameof(environment));
 
-            if (environment.TryGetValue(TenantContextKey, out var tenantContext))
+            if (environment.TryGetValue(TenantContextKey, out object tenantContext))
                 return tenantContext as TenantContext<TTenant>;
 
             return null;
@@ -50,13 +51,10 @@ namespace Dime.MultiTenancy
         /// <returns></returns>
         public static TTenant GetTenant<TTenant>(this IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, "environment");
+            Ensure.Argument.NotNull(environment, nameof(environment));
 
             TenantContext<TTenant> tenantContext = GetTenantContext<TTenant>(environment);
-            if (tenantContext != null)
-                return tenantContext.Tenant;
-
-            return default(TTenant);
+            return tenantContext != null ? tenantContext.Tenant : default;
         }
     }
 }

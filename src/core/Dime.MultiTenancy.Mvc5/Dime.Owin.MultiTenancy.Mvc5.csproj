@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ProjectGuid>{154C50CD-6969-4902-9D38-2FF04E6A5180}</ProjectGuid>
+    <RootNamespace>Dime.Owin.MultiTenancy.Mvc5</RootNamespace>
+    <AssemblyName>Dime.Owin.MultiTenancy.Mvc5</AssemblyName>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <AssemblyTitle>Dime.Owin.MultiTenancy.Mvc5</AssemblyTitle>
+    <Company>Dimenics</Company>
+    <Product>Dimenics</Product>
+    <Description>Give access to the multi-tenant pipeline in the web contexts</Description>
+    <Copyright>Copyright © 2020</Copyright>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/dimenics/dime-multitenancy</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dime.System" Version="1.0.5" />
+    <PackageReference Include="Microsoft.Owin.Host.SystemWeb" Version="4.1.0" />
+    <PackageReference Include="Owin" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dime.MultiTenancy\Dime.Owin.MultiTenancy.csproj" />
+  </ItemGroup>
+</Project>

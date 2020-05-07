@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <ProjectGuid>{CE4A037A-113E-4F45-9DBD-AAE0645EB1F5}</ProjectGuid>
+    <RootNamespace>Dime.Owin.MultiTenancy</RootNamespace>
+    <AssemblyName>Dime.Owin.MultiTenancy</AssemblyName>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <AssemblyTitle>Dime.Owin.MultiTenancy</AssemblyTitle>
+    <Company>Dimenics</Company>
+    <Product>Dime.Owin.MultiTenancy</Product>
+    <Description>Adds a multi-tenant pipeline to the OWIN middleware</Description>
+    <Copyright>Copyright © 2020</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/dimenics/dime-multitenancy</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>    
+  <ItemGroup>
+    <PackageReference Include="Dime.System" Version="1.0.5" />
+    <PackageReference Include="Microsoft.Owin" Version="4.1.0" />
+    <PackageReference Include="Owin" Version="1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+</Project>

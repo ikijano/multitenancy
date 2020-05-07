@@ -1,9 +1,10 @@
-﻿using Dime.MultiTenancy;
+﻿using Owin;
+using Owin.MultiTenancy;
 
 namespace System.Web
 {
     /// <summary>
-    ///
+    /// Multi tenancy extensions for the <see cref="HttpRequestBase"/> class.
     /// </summary>
     public static class HttpRequestBaseExtensions
     {
@@ -15,7 +16,7 @@ namespace System.Web
         /// <returns></returns>
         public static TenantContext<TTenant> GetTenantContext<TTenant>(this HttpRequestBase request)
         {
-            Ensure.Argument.NotNull(request, "request");
+            Ensure.Argument.NotNull(request, nameof(request));
             return request.GetOwinContext().Environment.GetTenantContext<TTenant>();
         }
 
@@ -27,7 +28,7 @@ namespace System.Web
         /// <returns></returns>
         public static TTenant GetTenant<TTenant>(this HttpRequestBase request)
         {
-            Ensure.Argument.NotNull(request, "request");
+            Ensure.Argument.NotNull(request, nameof(request));
             return request.GetOwinContext().Environment.GetTenant<TTenant>();
         }
     }

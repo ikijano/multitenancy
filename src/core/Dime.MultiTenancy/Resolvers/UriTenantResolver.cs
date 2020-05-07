@@ -1,9 +1,9 @@
-﻿using Microsoft.Owin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Owin;
 
-namespace Dime.MultiTenancy
+namespace Owin.MultiTenancy
 {
     /// <summary>
     ///
@@ -11,6 +11,13 @@ namespace Dime.MultiTenancy
     /// <typeparam name="TTenant"></typeparam>
     public abstract class UriTenantResolver<TTenant> : ITenantResolver<TTenant>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UriTenantResolver{TTenant}"/> class
+        /// </summary>
+        protected UriTenantResolver()
+        {
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -25,10 +32,10 @@ namespace Dime.MultiTenancy
         /// <returns></returns>
         Task<TenantContext<TTenant>> ITenantResolver<TTenant>.ResolveAsync(IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, "environment");
+            Ensure.Argument.NotNull(environment, nameof(environment));
 
             OwinContext owinContext = new OwinContext(environment);
-            return this.ResolveAsync(owinContext.Request.Uri);
+            return ResolveAsync(owinContext.Request.Uri);
         }
     }
 }
