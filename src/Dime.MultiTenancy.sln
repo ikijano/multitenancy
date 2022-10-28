@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28407.52
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Owin.MultiTenancy", "core\Dime.MultiTenancy\Dime.Owin.MultiTenancy.csproj", "{CE4A037A-113E-4F45-9DBD-AAE0645EB1F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Owin.MultiTenancy", "core\Dime.MultiTenancy\Dime.Owin.MultiTenancy.csproj", "{CE4A037A-113E-4F45-9DBD-AAE0645EB1F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{109CC874-AB46-449F-A1BF-600A2D392B40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Owin.MultiTenancy.Tests", "test\Dime.MultiTenancy.Tests\Dime.Owin.MultiTenancy.Tests.csproj", "{FC47A35E-7331-4AF1-B2E5-A7F02A005125}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Owin.MultiTenancy.Mvc5", "core\Dime.MultiTenancy.Mvc5\Dime.Owin.MultiTenancy.Mvc5.csproj", "{154C50CD-6969-4902-9D38-2FF04E6A5180}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{B95A20D4-1113-427C-BAF6-F30A68900D52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Throw", "..\vendor\throw\src\Throw.csproj", "{FA23518C-3945-4C02-BF63-BEE1F0290AF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,12 +40,19 @@ Global
 		{154C50CD-6969-4902-9D38-2FF04E6A5180}.NuGet|Any CPU.Build.0 = Release|Any CPU
 		{154C50CD-6969-4902-9D38-2FF04E6A5180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{154C50CD-6969-4902-9D38-2FF04E6A5180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0}.NuGet|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0}.NuGet|Any CPU.Build.0 = Debug|Any CPU
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FC47A35E-7331-4AF1-B2E5-A7F02A005125} = {109CC874-AB46-449F-A1BF-600A2D392B40}
+		{FA23518C-3945-4C02-BF63-BEE1F0290AF0} = {B95A20D4-1113-427C-BAF6-F30A68900D52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F4D2184-4940-42EB-A703-3BA4AE5B6A18}
