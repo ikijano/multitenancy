@@ -7,7 +7,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{FC47A35E-7331-4AF1-B2E5-A7F02A005125}</ProjectGuid>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <AssemblyTitle>Dime.SaaS.MultiTenancy.Tests</AssemblyTitle>
     <Product>Dimenics</Product>
     <Copyright>Copyright © 2020</Copyright>

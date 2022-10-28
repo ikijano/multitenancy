@@ -10,7 +10,7 @@
     <ProjectGuid>{CE4A037A-113E-4F45-9DBD-AAE0645EB1F5}</ProjectGuid>
     <RootNamespace>Dime.Owin.MultiTenancy</RootNamespace>
     <AssemblyName>Dime.Owin.MultiTenancy</AssemblyName>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>net48</TargetFrameworks>
     <AssemblyTitle>Dime.Owin.MultiTenancy</AssemblyTitle>
     <Company>Dimenics</Company>
     <Product>Dime.Owin.MultiTenancy</Product>
