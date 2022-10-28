@@ -1,0 +1,4 @@
+[submodule "vendor/throw"]
+	path = vendor/throw
+	url = https://github.com/ikijano/throw.git
+	branch = netstandard2
