@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Throw;
+
 namespace Owin.MultiTenancy
 {
     /// <summary>
@@ -15,7 +17,7 @@ namespace Owin.MultiTenancy
         /// <param name="tenant"></param>
         public TenantContext(TTenant tenant)
         {
-            Ensure.Argument.NotNull(tenant, nameof(tenant));
+            tenant.ThrowIfNull();
 
             Tenant = tenant;
             Properties = new Dictionary<string, object>();

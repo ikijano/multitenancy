@@ -37,11 +37,13 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>    
   <ItemGroup>
-    <PackageReference Include="Dime.System" Version="1.0.5" />
     <PackageReference Include="Microsoft.Owin" Version="4.1.0" />
     <PackageReference Include="Owin" Version="1.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\vendor\throw\src\Throw.csproj" />
   </ItemGroup>
 </Project>

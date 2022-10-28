@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Throw;
+
 namespace Owin.MultiTenancy
 {
     /// <summary>
@@ -17,8 +19,8 @@ namespace Owin.MultiTenancy
         /// <param name="tenantResolverFactory"></param>
         public TenantResolutionMiddleware(Func<IDictionary<string, object>, Task> next, Func<ITenantResolver<TTenant>> tenantResolverFactory)
         {
-            Ensure.Argument.NotNull(next, nameof(next));
-            Ensure.Argument.NotNull(tenantResolverFactory, nameof(tenantResolverFactory));
+            next.ThrowIfNull();
+            tenantResolverFactory.ThrowIfNull();
 
             _next = next;
             _tenantResolverFactory = tenantResolverFactory;
@@ -34,7 +36,7 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, nameof(environment));
+            environment.ThrowIfNull();
 
             ITenantResolver<TTenant> tenantResolver = _tenantResolverFactory();
             TenantContext<TTenant> tenantContext = await tenantResolver.ResolveAsync(environment);

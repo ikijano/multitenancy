@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 
+using Throw;
+
 namespace Owin.MultiTenancy
 {
     /// <summary>
@@ -19,8 +21,8 @@ namespace Owin.MultiTenancy
         /// <param name="permanentRedirect"></param>
         public TenantNotFoundRedirectMiddleware(Func<IDictionary<string, object>, Task> next, string redirectLocation, bool permanentRedirect)
         {
-            Ensure.Argument.NotNull(next, nameof(next));
-            Ensure.Argument.NotNull(redirectLocation, nameof(redirectLocation));
+            next.ThrowIfNull();
+            redirectLocation.ThrowIfNull();
 
             _next = next;
             _redirectLocation = redirectLocation;
@@ -38,7 +40,7 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, nameof(environment));
+            environment.ThrowIfNull();
 
             TenantContext<TTenant> tenantContext = environment.GetTenantContext<TTenant>();
             if (tenantContext == null)

@@ -1,6 +1,8 @@
 ﻿using Owin;
 using Owin.MultiTenancy;
 
+using Throw;
+
 namespace System.Web
 {
     /// <summary>
@@ -16,7 +18,7 @@ namespace System.Web
         /// <returns></returns>
         public static TenantContext<TTenant> GetTenantContext<TTenant>(this HttpRequestBase request)
         {
-            Ensure.Argument.NotNull(request, nameof(request));
+            request.ThrowIfNull();
             return request.GetOwinContext().Environment.GetTenantContext<TTenant>();
         }
 
@@ -28,7 +30,7 @@ namespace System.Web
         /// <returns></returns>
         public static TTenant GetTenant<TTenant>(this HttpRequestBase request)
         {
-            Ensure.Argument.NotNull(request, nameof(request));
+            request.ThrowIfNull();
             return request.GetOwinContext().Environment.GetTenant<TTenant>();
         }
     }

@@ -4,6 +4,8 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 
+using Throw;
+
 namespace Owin.MultiTenancy
 {
     /// <summary>
@@ -34,7 +36,7 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         Task<TenantContext<TTenant>> ITenantResolver<TTenant>.ResolveAsync(IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, nameof(environment));
+            environment.ThrowIfNull();
 
             OwinContext owinContext = new OwinContext(environment);
             return ResolveAsync(owinContext.Request.User);

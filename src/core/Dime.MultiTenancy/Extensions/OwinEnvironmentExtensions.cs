@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Throw;
+
 namespace Owin.MultiTenancy
 {
     /// <summary>
@@ -21,8 +23,8 @@ namespace Owin.MultiTenancy
         /// <param name="tenantContext"></param>
         public static void SetTenantContext<TTenant>(this IDictionary<string, object> environment, TenantContext<TTenant> tenantContext)
         {
-            Ensure.Argument.NotNull(environment, nameof(environment));
-            Ensure.Argument.NotNull(tenantContext, nameof(tenantContext));
+            environment.ThrowIfNull();
+            tenantContext.ThrowIfNull();
 
             environment.AddOrUpdate(TenantContextKey, tenantContext);
         }
@@ -35,7 +37,7 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public static TenantContext<TTenant> GetTenantContext<TTenant>(this IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, nameof(environment));
+            environment.ThrowIfNull();
 
             if (environment.TryGetValue(TenantContextKey, out object tenantContext))
                 return tenantContext as TenantContext<TTenant>;
@@ -51,7 +53,7 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public static TTenant GetTenant<TTenant>(this IDictionary<string, object> environment)
         {
-            Ensure.Argument.NotNull(environment, nameof(environment));
+            environment.ThrowIfNull();
 
             TenantContext<TTenant> tenantContext = GetTenantContext<TTenant>(environment);
             return tenantContext != null ? tenantContext.Tenant : default;

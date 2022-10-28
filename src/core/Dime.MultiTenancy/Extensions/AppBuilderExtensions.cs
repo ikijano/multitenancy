@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Throw;
+
 namespace Owin.MultiTenancy
 {
     /// <summary>
@@ -16,8 +18,8 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public static IAppBuilder UseMultiTenancy<TTenant>(this IAppBuilder app, ITenantResolver<TTenant> tenantResolver)
         {
-            Ensure.Argument.NotNull(app, nameof(app));
-            Ensure.Argument.NotNull(tenantResolver, nameof(tenantResolver));
+            app.ThrowIfNull();
+            tenantResolver.ThrowIfNull();
 
             return app.UseMultiTenancy(() => tenantResolver);
         }
@@ -31,8 +33,8 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public static IAppBuilder UseMultiTenancy<TTenant>(this IAppBuilder app, Func<ITenantResolver<TTenant>> tenantResolverFactory)
         {
-            Ensure.Argument.NotNull(app, nameof(app));
-            Ensure.Argument.NotNull(tenantResolverFactory, nameof(tenantResolverFactory));
+            app.ThrowIfNull();
+            tenantResolverFactory.ThrowIfNull();
 
             app.Use(typeof(TenantResolutionMiddleware<TTenant>), tenantResolverFactory);
             return app;
@@ -48,8 +50,8 @@ namespace Owin.MultiTenancy
         /// <returns></returns>
         public static IAppBuilder RedirectIfTenantNotFound<TTenant>(this IAppBuilder app, string redirectLocation, bool permanentRedirect = false)
         {
-            Ensure.Argument.NotNull(app, nameof(app));
-            Ensure.Argument.NotNullOrEmpty(redirectLocation, nameof(redirectLocation));
+            app.ThrowIfNull();
+            redirectLocation.ThrowIfNull();
 
             app.Use(typeof(TenantNotFoundRedirectMiddleware<TTenant>), redirectLocation, permanentRedirect);
             return app;
